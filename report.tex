@@ -1,0 +1,543 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{algorithm}
+\usepackage{float}
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+\algdef{SE}[DOWHILE]{Do}{doWhile}{\algorithmicdo}[1]{\algorithmicwhile\ #1}
+
+\begin{document}
+
+\section{Algorithms}
+
+    \subsection{Bubble sort}
+    \begin{enumerate}
+        \item Idea: we repeatedly swap the adjacent elements If they are in the wrong order.
+        \item Pseudo code:
+        \begin{algorithm}[H]
+            \caption{Bubble sort}
+            \begin{algorithmic}[1]
+                \Function{bubblesort}{$A$}
+                    \State $n:=$ length($A$)
+                    \For{$i:=0$ to $n-2$}
+                        \For{$j:=n-1$ to $i$}
+                            \If{$A[i]<A[i-1]$}
+                                \State \textbf{swap} $A[i-1]$ \textbf{with} $A[i]$
+                            \EndIf
+                        \EndFor
+                    \EndFor
+                \EndFunction
+            \end{algorithmic}
+        \end{algorithm}
+        \item Aplications:
+        \begin{itemize}
+            \item Bubble sort is effective algorithm For a small dataset.
+        \end{itemize}
+        \item Optimizations:
+        \begin{itemize}
+            \item If there is no swapping in the inner loop, we stop the algorithm.
+            \item Save the index at which the last swap occurred. We know that all the elements beFore that index are in their correct orders, so in the next loop we only need to loop to that index.
+        \end{itemize}
+        \item Complexity:
+        \begin{itemize}
+            \item Worst-case performance: $O(n^2)$
+            \item Best-case performance: $\Omega(n^2)$
+            \item Average performance:: $\Theta(n^2)$
+            \item Worst-case space complexity: $O(1)$
+        \end{itemize}
+    \end{enumerate}
+    
+    \subsection{Shaker sort}
+    \begin{enumerate}
+        \item Idea: Shaker sort is a variation of bubble sort based on the observation that in bubble sort, large elements in the beginning of the array move very slow to their correct orders at the End of array. ThereFore, each iteration of the algorithm could be broken into stages: loops through the array from left to right and vice versa.
+        \item Pseudo code:
+        \begin{algorithm}[H]
+            \caption{Shaker sort}
+            \begin{algorithmic}[1]
+                \Function{shakersort}{$A$}
+                    \State $n:=$ length($A$)
+                    \State $L:=0$
+                    \State $R:=n-1$
+                    \While{$L<R$}
+                        \State $\textit{newL}:=R$
+                        \State $\textit{newR}:=L$
+                        \For{$i:=L$ to $R-1$}
+                            \If{$A[i]>A[i+1]$}
+                                \State \textbf{swap} $A[i]$ \textbf{with} $A[i+1]$
+                                \State $\textit{newR}:=i$
+                            \EndIf
+                        \EndFor
+                        \State $R:=\textit{newR}$
+                        \For{$i:=R$ to $L+1$}
+                            \If{$A[i-1]>A[i1]$}
+                                \State \textbf{swap} $A[i-1]$ \textbf{with} $A[i]$
+                                \State $\textit{newL}:=i$
+                            \EndIf
+                        \EndFor
+                        \State $L:=\textit{newL}$
+                    \EndWhile
+                \EndFunction
+            \end{algorithmic}
+        \end{algorithm}
+        \item Aplications:
+        \begin{itemize}
+            \item Shaker sort is effective algorithm For a small dataset.
+        \end{itemize}
+        \item Optimizations:
+        \item Complexity:
+        \begin{itemize}
+            \item Worst-case performance: $O(n^2)$
+            \item Best-case performance: $\Omega(n)$ when the array is already sorted.
+            \item Average performance:: $\Theta(n^2)$
+            \item Worst-case space complexity: $O(1)$
+        \end{itemize}
+    \end{enumerate}
+
+    \subsection{Selection sort}
+    \begin{enumerate}
+        \item Idea: we find the minimum or maximum element in an unsorted array and then putting it in its correct position in a sorted array.
+        \item Pseudo code:
+        \begin{algorithm}[H]
+            \caption{Selection sort}
+            \begin{algorithmic}[1]
+                \Function{selectionsort}{$A$}
+                    \State $n:=$ length($A$)
+                    \For{$i:=0$ to $n-2$}
+                        \State $\textit{minID}:=i$
+                        \For{$j:=i+1$ to $n-2$}
+                            \If{$A[j]<A[\textit{minID}]$}
+                                \State $\textit{minID}:=j$
+                            \EndIf
+                        \EndFor
+                        \State \textbf{swap} $A[i]$ \textbf{with} $A[\textit{minID}]$
+                    \EndFor
+                \EndFunction
+            \end{algorithmic}
+        \end{algorithm}
+        \item Aplications
+        \begin{itemize}
+            \item Selection sort is effective algorithm For a small dataset.
+        \end{itemize}
+        \item Optimizations
+        \item Complexity:
+        \begin{itemize}
+            \item Worst-case performance: $O(n^2)$
+            \item Best-case performance: $\Omega(n^2)$
+            \item Average performance:: $\Theta(n^2)$
+            \item Worst-case space complexity: $O(1)$
+        \end{itemize}
+    \end{enumerate}
+
+    \subsection{Insertion sort}
+    \begin{enumerate}
+        \item Idea: we repeatedly insert an element to its correct position in an sorted array.
+        \item Pseudo code:
+        \begin{algorithm}[H]
+            \caption{Insertion sort}
+            \begin{algorithmic}[1]
+                \Function{insertionsort}{$A$}
+                    \State $n:=$ length($A$)
+                    \For{$i:=1$ to $n-1$}
+                        \State $x:=A[i]$
+                        \State $j:=i-1$
+                        \While{$j\geq 0$ \textbf{and} $A[j]>x$}
+                            \State $A[j+1]:=A[j]$
+                            \State $j:=j-1$
+                        \EndWhile
+                        \State $A[j+1]:=x$
+                    \EndFor
+                \EndFunction
+            \end{algorithmic}
+        \end{algorithm}
+        \item Aplications:
+        \begin{itemize}
+            \item Insertion sort is effective algorithm For a small dataset.
+            \item Insertion sort is effective algorithm For a nearly sorted or sorted dataset.
+        \end{itemize}
+        \item Optimizations:
+        \begin{itemize}
+            \item We can use binary search to find the correct order of the element effectively.
+        \end{itemize}
+        \item Complexity:
+        \begin{itemize}
+            \item Worst-case performance: $O(n^2)$
+            \item Best-case performance: $\Omega(n)$ when the array is already sorted.
+            \item Average performance:: $\Theta(n^2)$
+            \item Worst-case space complexity: $O(1)$
+        \end{itemize}
+    \end{enumerate}
+
+    \subsection{Shell sort}
+    \begin{enumerate}
+        \item Idea: Shell sort is a variation of insertion sort. In insertion sort, we can only move element by one position. The idea of Shell sort is optimizing that movement by allowing exchange of far items. In more detailed, we make the array h-sorted For a large h and keep reduce h until it becomes 1. An array is said to be h-sorted If all sublists of every h’th element are sorted.
+        \item Pseudo code:
+        \begin{algorithm}[H]
+            \caption{Shell sort}
+            \begin{algorithmic}[1]
+                \Function{shellsort}{$A$}
+                    \State $n:=$ length($A$)
+                    \State $\textit{gap}:=n/2$
+                    \While{$\textit{gap}\geq 1$}
+                        \For{$i:=1$ to $n-1$}
+                            \State $x:=A[i]$
+                            \State $j:=i-gap$
+                            \While{$j\geq 0$ \textbf{and} $A[j]>x$}
+                            \State $A[j+gap]:=A[j]$
+                            \State $j:=j-gap$
+                            \EndWhile
+                            \State $A[j+gap]:=x$
+                        \EndFor
+                        \State $\textit{gap}:=\textit{gap}/2$
+                    \EndWhile
+                \EndFunction
+            \end{algorithmic}
+        \end{algorithm}
+        \item Aplications:
+        \item Optimizations:
+        \item Complexity:
+        \begin{itemize}
+            \item Worst-case performance: $O(n^2)$ when $n$ is the power of 2.
+            \item Best-case performance: $\Omega(n\log n)$ when the array is already sorted.
+            \item Average performance:: $\Theta(n\log n)$
+            \item Worst-case space complexity: $O(1)$
+        \end{itemize}
+    \end{enumerate}
+    \subsection{Merge sort}
+    \begin{enumerate}
+        \item Idea: we break down an array into several subarrays until each subarray consists of a single element and merging those subarrays in a manner that results in a sorted array.
+        \item Pseudo code:
+        \begin{algorithm}[H]
+            \caption{Merge sort}
+            \begin{algorithmic}[1]
+                \Function{merge}{$A$, $\textit{left}$, $\textit{mid}$, $\textit{right}$}
+                    \State $k:=0$
+                    \State $i:=\textit{left}$
+                    \State $j:=\textit{mid}$
+                    \For{$i:=\textit{left}$ \textbf{to} $\textit{right}-1$}
+                        \If{$i<\textit{mid}$ \textbf{and} ($j\geq \textit{right}$ \textbf{or} $A[i]<A[j]$)}
+                            \State $B[k]:=A[i]$
+                            \State $k:=k+1$
+                            \State $i:=i+1$
+                        \Else
+                            \State $B[k]:=A[j]$
+                            \State $k:=k+1$
+                            \State $j:=j+1$
+                        \EndIf
+                    \EndFor
+                    \For{$i:=\textit{left}$ \textbf{to} $\textit{right}-1$}
+                        \State $A[i]:=B[i-\textit{left}]$
+                    \EndFor
+                \EndFunction
+                \State
+                \Function{mergesort}{$A$, $\textit{left}$, $\textit{right}$}
+                    \If{$\textit{right}-\textit{left}\leq 1$}
+                        \State \textbf{return}
+                    \EndIf
+                    \State $\textit{mid}:=(\textit{left}+\textit{right})/2$
+                    \State \Call{mergesort}{$A$, $\textit{left}$, $\textit{mid}$}
+                    \State \Call{mergesort}{$A$, $\textit{mid}$, $\textit{right}$}
+                    \State \Call{merge}{$A$, $\textit{left}$, $\textit{mid}$, $\textit{right}$}
+                \EndFunction
+            \end{algorithmic}
+        \end{algorithm}
+        \item Aplications:
+        \item Optimizations:
+        \item Complexity:
+        \begin{itemize}
+            \item Worst-case performance: $O(n\log n)$.
+            \item Best-case performance: $\Omega(n\log n)$.
+            \item Average performance:: $\Theta(n\log n)$.
+            \item Worst-case space complexity: $O(n)$.
+        \end{itemize}
+    \end{enumerate}
+
+    \subsection{Quick sort}
+    \begin{enumerate}
+        \item Idea: in quick sort we recursively choose a pivot and then partition the array into two part: one with elements smaller than the pivot and one with elements greater than the pivot.
+        \item Pseudo code:
+        \begin{algorithm}[H]
+            \caption{Quick sort}
+            \begin{algorithmic}[1]
+                \Function{partition}{$A$, $\textit{left}$, $\textit{right}$}
+                    \State $\textit{pivot}:=A[(\textit{left}+\textit{right}-1)/2]$
+                    \State $i:=\textit{left}-1$
+                    \State $j:=\textit{right}$
+                    \Loop\ \textbf{forever}
+                    \Do
+                        \State $i:=i+1$
+                    \doWhile{$A[i]<\textit{pivot}$}
+                    \Do
+                        \State $j:=j-1$
+                    \doWhile{$A[j]>\textit{pivot}$}
+                    \If{$i\geq j$}
+                        \State \textbf{return} j
+                    \EndIf
+                    \State \textbf{swap} $A[i]$ \textbf{with} $A[j]$
+                    \EndLoop
+                \EndFunction
+                \State
+                \Function{quicksort}{$A$, $\textit{left}$, $\textit{right}$}
+                    \If{$\textit{right}-\textit{left}\leq 1$}
+                        \State \textbf{return}
+                    \EndIf
+                    \State $p:=$\ \Call{partition}{$A$, $\textit{left}$, $\textit{right}$}
+                    \State \Call{quicksort}{$A$, $\textit{left}$, $\textit{p}$}
+                    \State \Call{quicksort}{$A$, $\textit{p}$, $\textit{right}$}
+                \EndFunction
+            \end{algorithmic}
+        \end{algorithm}
+        \item Aplications:
+        \item Optimizations:
+        \begin{itemize}
+            \item There are two way of choosing pivot to minimize the chance of an imbalanced partition:
+            \begin{enumerate}
+                \item Choose a random pivot.
+                \item Choose a median of leftmost, rightmost, and middle elements as pivot.
+            \end{enumerate}
+            \item We can use tail recursion to reduce quick sort worst-case space complexity form $O(n)$ to $O(\log n)$:
+            \begin{itemize}
+                \item Description: partition the current array into two parts and call recursion on the smaller part, then repeat this on the remaining part.
+                \item Explaination: Because we always call the recursion on the smaller part, the size of the array is always reduce by at least half in each recursion. For that reason, the depth of the call tree is $O(\log n)$ and the space complexity therefore reduce to $O(\log n)$.
+            \end{itemize}
+        \end{itemize}
+        \item Complexity:
+        \begin{itemize}
+            \item Worst-case performance: $O(n^2)$ when the chosen pivot is always the largest or smallest element.
+            \item Best-case performance: $\Omega(n\log n)$ when each time we perform a partition, we always divide the array into 2 equal parts.
+            \item Average performance:: $\Theta(n\log n)$.
+            \item Worst-case space complexity: $O(n)$ (naive), $O(\log n)$ if use tail recursion.
+        \end{itemize}
+    \end{enumerate}
+
+    \subsection{Heap sort}
+    \begin{enumerate}
+        \item Idea: heap sort is a sorting algorithm based on binary heap data structure. It is similar to the selection sort where we first find the maximum element and place the maximum element at the end. Then repeat the same process for the remaining elements.
+        \item Pseudo code:
+        \begin{algorithm}[H]
+            \caption{Heap sort}
+            \begin{algorithmic}[1]
+                \Function{sift}{$A$, $\textit{left}$, $\textit{right}$}
+                    \State $i:=\textit{left}$
+                    \State $j:=2*i+1$
+                    \State $x:=A[i]$
+                    \While{$j<\textit{right}$}
+                        \If{$j+1<\textit{right}$ \textbf{and} $A[j]<A[j+1$]}
+                        \State $j:=j+1$
+                        \EndIf
+                        \If{$x\geq A[j]$}
+                        \State \textbf{break}
+                        \EndIf
+                        \State $A[i]:=A[j]$
+                        \State $i:=j$
+                        \State $j:=2*i+1$
+                    \EndWhile
+                    \State $A[i]:=x$
+                \EndFunction
+                \State
+                \Function{heapsort}{$A$}
+                    \State $n:=$ length($A$)
+                    \For{$i:=n/2-1$ \textbf{to} $0$}
+                        \State \Call{sift}{$A$, $i$, $n$}
+                    \EndFor
+                    \For{$i:=n-1$ \textbf{to} $0$}
+                        \State \textbf{swap} $A[0]$ \textbf{with} $A[i]$
+                        \State \Call{sift}{$A$, $0$, $i$} 
+                    \EndFor
+                \EndFunction
+            \end{algorithmic}
+        \end{algorithm}
+        \item Aplications:
+        \item Optimizations: (none)
+        \item Complexity:
+        \begin{itemize}
+            \item Worst-case performance: $O(n\log n)$.
+            \item Best-case performance: $\Omega(n\log n)$.
+            \item Average performance:: $\Theta(n\log n)$.
+            \item Worst-case space complexity: $O(1)$.
+        \end{itemize}
+    \end{enumerate}
+
+    \subsection{Counting sort}
+    \begin{enumerate}
+        \item Idea: in counting sort, we count the number of elements having distinct value. Then do some arithmetic to calculate the position of each element in the sorted array.
+        \item Pseudo code:
+        \begin{algorithm}[H]
+            \caption{Counting sort}
+            \begin{algorithmic}[1]
+                \Function{countingsort}{$A$}
+                    \State $n:=$ length($A$)
+                    \State $\textit{min}:=+\infty$
+                    \State $\textit{max}:=-\infty$
+                    \For{$i:=0$ \textbf{to} $n-1$}
+                        \If{$\textit{min}>A[i]$}
+                            \State $\textit{min}:=A[i]$
+                        \EndIf
+                        \If{$\textit{max}<A[i]$}
+                            \State $\textit{max}:=A[i]$
+                        \EndIf
+                    \EndFor 
+                    \For{$i:=0$ \textbf{to} $\textit{max}-\textit{min}$}
+                        \State $\textit{count}[i]:=0$
+                    \EndFor
+                    \For{$i:=0$ \textbf{to} $n-1$}
+                        \State $\textit{count}[A[i]-\textit{min}]:=\textit{count}[A[i]-\textit{min}]+1$
+                    \EndFor
+                    \For{$i:=1$ \textbf{to} $\textit{max}-\textit{min}$}
+                        \State $\textit{count}[i]:=\textit{count}[i]+\textit{count}[i-1]$
+                    \EndFor
+                    \For{$i:=n-1$ \textbf{to} $0$}
+                        \State $B[\textit{count}[A[i]-\textit{min}]-1]:=A[i]$
+                        \State $\textit{count}[A[i]-\textit{min}]:=\textit{count}[A[i]-\textit{min}]-1$
+                    \EndFor
+                    \For{$i:=0$ \textbf{to} $n-1$}
+                        \State $A[i]:=B[i]$
+                    \EndFor
+                \EndFunction
+            \end{algorithmic}
+        \end{algorithm}
+        \item Aplications:
+        \item Optimizations: (none)
+        \item Complexity: k is the range of the non-negative key values.
+        \begin{itemize}
+            \item Worst-case performance: $O(n+k)$.
+            \item Best-case performance: $\Omega(n+k)$.
+            \item Average performance:: $\Theta(n+k)$.
+            \item Worst-case space complexity: $O(n+k)$.
+        \end{itemize}
+    \end{enumerate}
+    
+    \subsection{Radix sort (least significant digit)}
+    \begin{enumerate}
+        \item Idea: we do digit by digit sort starting from least significant digit to most significant digit. Radix sort uses counting sort as a subroutine to sort.
+        \item Pseudo code:
+        \begin{algorithm}[H]
+            \caption{Radix sort}
+            \begin{algorithmic}[1]
+                \Function{countsort}{$A$, $\textit{exp}$}
+                    \State $n:=$ length($A$)
+                    \For{$i:=0$ \textbf{to} $9$}
+                        \State $\textit{count}[i]:=0$
+                    \EndFor
+                    \For{$i:=0$ \textbf{to} $n-1$}
+                        \State $\textit{curDigit}:=(A[i]\ \textbf{div}\ exp)\ \textbf{mod}\ 10$
+                        \State $\textit{count}[curDigit]:=\textit{count}[curDigit]+1$
+                    \EndFor
+                    \For{$i:=1$ \textbf{to} $9$}
+                        \State $\textit{count}[i]:=\textit{count}[i]+\textit{count}[i-1]$
+                    \EndFor
+                    \For{$i:=0$ \textbf{to} $n-1$}
+                        \State $\textit{curDigit}:=(A[i]\ \textbf{div}\ exp)\ \textbf{mod}\ 10$
+                        \State $B[\textit{count}[curDigit]-1]:=A[i]$
+                        \State $\textit{count}[curDigit]:=\textit{count}[curDigit]-1$
+                    \EndFor
+                    \For{$i:=0$ \textbf{to} $n-1$}
+                        \State $A[i]:=B[i]$
+                    \EndFor
+                \EndFunction
+                \State
+                \Function{radixsort}{$A$}
+                \State $n:=$ length($A$)
+                \State $\textit{max}:=-\infty$
+                \For{$i:=0$ \textbf{to} $n-1$}
+                    \If{$\textit{max}<A[i]$}
+                        \State $\textit{max}:=A[i]$
+                    \EndIf
+                \EndFor 
+                \State $\textit{tmp}:=\textit{max}$
+                \State $\textit{exp}:=1$
+                \While{$\textit{tmp}>0$}
+                    \State \Call{countsort}{$A$, \textit{exp}}
+                    \State $\textit{exp}:=\textit{exp}*10$
+                    \State $\textit{tmp}:=\textit{tmp}\ \textbf{div}\ 10$
+                \EndWhile
+                \EndFunction
+            \end{algorithmic}
+        \end{algorithm}
+        \item Aplications:
+        \item Optimizations: (none)
+        \item Complexity: b is the base and d is the number of digits in the maximum element in the array.
+        \begin{itemize}
+            \item Worst-case performance: $O(d.(n+b))$.
+            \item Best-case performance: $\Omega(d.(n+b))$.
+            \item Average performance:: $\Theta(d.(n+b))$.
+            \item Worst-case space complexity: $O(n+b)$.
+        \end{itemize}
+    \end{enumerate}
+
+    \subsection{Flash sort}
+    \begin{enumerate}
+        \item Idea: we distribute the elements in the array into different buckets then sort each bucket using insertion sort.
+        \item Pseudo code:
+        \begin{algorithm}[H]
+            \caption{Flash sort}
+            \begin{algorithmic}[1]
+                \Function{flashsort}{$A$}
+                    \State $n:=$ length($A$), $\textit{min}:=+\infty$, $\textit{max}:=-\infty$
+                    \For{$i:=0$ \textbf{to} $n-1$}
+                        \If{$\textit{min}>A[i]$}
+                            \State $\textit{min}:=A[i]$
+                        \EndIf
+                        \If{$\textit{max}<A[i]$}
+                            \State $\textit{max}:=A[i]$
+                        \EndIf
+                    \EndFor 
+                    \State $m:=0.43*n$
+                    \For{$i:=1$ \textbf{to} $m$}
+                    \State $L[i]:=0$
+                    \EndFor
+                    \For{$i:=0$ \textbf{to} $n-1$}
+                    \State $k:=(m-1)*(A[i]-\textit{min})\ \textbf{div}\ (\textit{max}-\textit{min})+1$
+                    \State $L[k]:=L[k]+1$
+                    \EndFor
+                    \For{$i:=2$ \textbf{to} $m$}
+                    \State $L[i]:=L[i]+L[i-1]$
+                    \EndFor
+                    \algstore{myalg}
+            \end{algorithmic}
+        \end{algorithm}
+        
+        \begin{algorithm}[H]
+            \begin{algorithmic}[1]
+                    \algrestore{myalg}
+                    \State $\textit{count}:=0$, $i:=0$, $k:=m$
+                    \While{$\textit{count}<n$}
+                        \While{$i\geq L[k]$}
+                            \State $i:=i+1$
+                            \State $k:=(m-1)*(A[i]-\textit{min})\ \textbf{div}\ (\textit{max}-\textit{min})+1$
+                        \EndWhile
+                        \State $x:=A[i]$
+                        \While{$i<L[k]$}
+                            \State $k:=(m-1)*(x-\textit{min})\ \textbf{div}\ (\textit{max}-\textit{min})+1$
+                            \State \textbf{swap} $x$ \textbf{with} $A[L[k]-1]$
+                            \State $L[k]:=L[k]-1$
+                            \State $\textit{count}:=\textit{count}+1$
+                        \EndWhile
+                    \EndWhile
+                    \For{$k:=1$ \textbf{to} $m$}
+                        \For{$i:=L[k]+1$ \textbf{to} $L[k]-1$}
+                            \State $x:=A[i]$
+                            \State $j:=i-1$
+                            \While{$j\geq 0$ \textbf{and} $A[j]>x$}
+                                \State $A[j+1]:=A[j]$
+                                \State $j:=j-1$
+                            \EndWhile
+                            \State $A[j+1]:=x$
+                        \EndFor
+                    \EndFor
+                \EndFunction
+            \end{algorithmic}
+        \end{algorithm}
+        \item Aplications:
+        \item Optimizations: (none)
+        \item Complexity: m is the number of buckets.
+        \begin{itemize}
+            \item Worst-case performance: $O(m+n^2)$ when all elements are distributed to the same bucket.
+            \item Best-case performance: $\Omega(n+m)$ when all elements are distributed equally and after the distribution, every bucket is sorted.
+            \item Average performance:: $\Theta(n\log n)$.
+            \item Worst-case space complexity: $O(m)$.
+        \end{itemize}
+    \end{enumerate}
+\end{document}
