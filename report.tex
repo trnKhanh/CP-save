@@ -1,29 +1,48 @@
 \documentclass[12pt]{article}
+\usepackage[vietnamese, main=english]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[vietnamese]{babel}
 \usepackage{amsmath}
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=0.9in]{geometry}
 \usepackage{algorithm}
 \usepackage{float}
 \usepackage{algpseudocode}
 \usepackage{algorithmicx}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
 \algdef{SE}[DOWHILE]{Do}{doWhile}{\algorithmicdo}[1]{\algorithmicwhile\ #1}
 
 \begin{document}
+\begin{titlepage}
+    \begin{center}
+        \vspace*{\fill}
+        \textbf{\Huge SORTING ALGORITHMS}
+        \item \large Author: \foreignlanguage{vietnamese}{Trần Nam Khánh}
+        \vspace*{\fill}
+    \end{center}
+\end{titlepage}
+\tableofcontents
+\newpage
 
 \section{Algorithms}
 
     \subsection{Bubble sort}
     \begin{enumerate}
-        \item Idea: we repeatedly swap the adjacent elements If they are in the wrong order.
+        \item Idea: we repeatedly swap the adjacent elements if they are in the wrong order.
         \item Pseudo code:
         \begin{algorithm}[H]
             \caption{Bubble sort}
             \begin{algorithmic}[1]
                 \Function{bubblesort}{$A$}
                     \State $n:=$ length($A$)
-                    \For{$i:=0$ to $n-2$}
-                        \For{$j:=n-1$ to $i$}
+                    \For{$i:=0$ \textbf{to} $n-2$}
+                        \For{$j:=n-1$ \textbf{to} $i$}
                             \If{$A[i]<A[i-1]$}
                                 \State \textbf{swap} $A[i-1]$ \textbf{with} $A[i]$
                             \EndIf
@@ -34,25 +53,26 @@
         \end{algorithm}
         \item Aplications:
         \begin{itemize}
-            \item Bubble sort is effective algorithm For a small dataset.
+            \item Bubble sort is effective algorithm for a small array.
         \end{itemize}
         \item Optimizations:
         \begin{itemize}
             \item If there is no swapping in the inner loop, we stop the algorithm.
-            \item Save the index at which the last swap occurred. We know that all the elements beFore that index are in their correct orders, so in the next loop we only need to loop to that index.
+            \item We store the index at which the last swap occurred.Because all the elements before that index are in their correct orders, so in the next loop we only need to loop to that index.
         \end{itemize}
+        \item Variants: shaker sort.
         \item Complexity:
         \begin{itemize}
-            \item Worst-case performance: $O(n^2)$
-            \item Best-case performance: $\Omega(n^2)$
-            \item Average performance:: $\Theta(n^2)$
-            \item Worst-case space complexity: $O(1)$
+            \item Worst-case performance: $O(n^2)$.
+            \item Best-case performance: $\Omega(n^2)$.
+            \item Average performance:: $\Theta(n^2)$.
+            \item Worst-case space complexity: $O(1)$.
         \end{itemize}
     \end{enumerate}
     
     \subsection{Shaker sort}
     \begin{enumerate}
-        \item Idea: Shaker sort is a variation of bubble sort based on the observation that in bubble sort, large elements in the beginning of the array move very slow to their correct orders at the End of array. ThereFore, each iteration of the algorithm could be broken into stages: loops through the array from left to right and vice versa.
+        \item Idea: Shaker sort is a variation of bubble sort based on the observation that in bubble sort, large elements in the beginning of the array move very slow to their correct orders at the end of array. Therefore, each iteration of the algorithm could be broken into stages: loop through the array from left to right and vice versa.
         \item Pseudo code:
         \begin{algorithm}[H]
             \caption{Shaker sort}
@@ -64,14 +84,14 @@
                     \While{$L<R$}
                         \State $\textit{newL}:=R$
                         \State $\textit{newR}:=L$
-                        \For{$i:=L$ to $R-1$}
+                        \For{$i:=L$ \textbf{to} $R-1$}
                             \If{$A[i]>A[i+1]$}
                                 \State \textbf{swap} $A[i]$ \textbf{with} $A[i+1]$
                                 \State $\textit{newR}:=i$
                             \EndIf
                         \EndFor
                         \State $R:=\textit{newR}$
-                        \For{$i:=R$ to $L+1$}
+                        \For{$i:=R$ \textbf{downto} $L+1$}
                             \If{$A[i-1]>A[i1]$}
                                 \State \textbf{swap} $A[i-1]$ \textbf{with} $A[i]$
                                 \State $\textit{newL}:=i$
@@ -84,30 +104,30 @@
         \end{algorithm}
         \item Aplications:
         \begin{itemize}
-            \item Shaker sort is effective algorithm For a small dataset.
+            \item Shaker sort is effective algorithm for a small array.
         \end{itemize}
-        \item Optimizations:
+        \item Optimizations: (none)
         \item Complexity:
         \begin{itemize}
-            \item Worst-case performance: $O(n^2)$
+            \item Worst-case performance: $O(n^2)$ when the array is reversed.
             \item Best-case performance: $\Omega(n)$ when the array is already sorted.
-            \item Average performance:: $\Theta(n^2)$
-            \item Worst-case space complexity: $O(1)$
+            \item Average performance:: $\Theta(n^2)$.
+            \item Worst-case space complexity: $O(1)$.
         \end{itemize}
     \end{enumerate}
 
     \subsection{Selection sort}
     \begin{enumerate}
-        \item Idea: we find the minimum or maximum element in an unsorted array and then putting it in its correct position in a sorted array.
+        \item Idea: we find the minimum element in an unsorted array and then putting it in its correct position in a sorted array.
         \item Pseudo code:
         \begin{algorithm}[H]
             \caption{Selection sort}
             \begin{algorithmic}[1]
                 \Function{selectionsort}{$A$}
                     \State $n:=$ length($A$)
-                    \For{$i:=0$ to $n-2$}
+                    \For{$i:=0$ \textbf{to} $n-2$}
                         \State $\textit{minID}:=i$
-                        \For{$j:=i+1$ to $n-2$}
+                        \For{$j:=i+1$ \textbf{to} $n-1$}
                             \If{$A[j]<A[\textit{minID}]$}
                                 \State $\textit{minID}:=j$
                             \EndIf
@@ -119,28 +139,29 @@
         \end{algorithm}
         \item Aplications
         \begin{itemize}
-            \item Selection sort is effective algorithm For a small dataset.
+            \item Selection sort is effective algorithm for a small array.
         \end{itemize}
-        \item Optimizations
+        \item Optimizations: (none)
         \item Complexity:
         \begin{itemize}
-            \item Worst-case performance: $O(n^2)$
-            \item Best-case performance: $\Omega(n^2)$
-            \item Average performance:: $\Theta(n^2)$
-            \item Worst-case space complexity: $O(1)$
+            \item Worst-case performance: $O(n^2)$.
+            \item Best-case performance: $\Omega(n^2)$.
+            \item Average performance:: $\Theta(n^2)$.
+            \item Worst-case space complexity: $O(1)$.
         \end{itemize}
     \end{enumerate}
 
+    \newpage
     \subsection{Insertion sort}
     \begin{enumerate}
-        \item Idea: we repeatedly insert an element to its correct position in an sorted array.
+        \item Idea: we repeatedly insert an element to its correct position in a sorted array.
         \item Pseudo code:
         \begin{algorithm}[H]
             \caption{Insertion sort}
             \begin{algorithmic}[1]
                 \Function{insertionsort}{$A$}
                     \State $n:=$ length($A$)
-                    \For{$i:=1$ to $n-1$}
+                    \For{$i:=1$ \textbf{to} $n-1$}
                         \State $x:=A[i]$
                         \State $j:=i-1$
                         \While{$j\geq 0$ \textbf{and} $A[j]>x$}
@@ -154,25 +175,27 @@
         \end{algorithm}
         \item Aplications:
         \begin{itemize}
-            \item Insertion sort is effective algorithm For a small dataset.
-            \item Insertion sort is effective algorithm For a nearly sorted or sorted dataset.
+            \item Insertion sort is a very effective algorithm for a small array.
+            \item Insertion sort is an effective algorithm for a nearly sorted or sorted array.
+            \item Insertion sort can be combined with other sorting algorithms to produce an effective algorithm. For example, Timsort, which is used in Java’s Arrays.sort() as well as Python’s sorted() and sort(), is a combination of merge sort and insertion sort.
         \end{itemize}
         \item Optimizations:
         \begin{itemize}
             \item We can use binary search to find the correct order of the element effectively.
         \end{itemize}
+        \item Variants: shell sort
         \item Complexity:
         \begin{itemize}
-            \item Worst-case performance: $O(n^2)$
+            \item Worst-case performance: $O(n^2)$.
             \item Best-case performance: $\Omega(n)$ when the array is already sorted.
-            \item Average performance:: $\Theta(n^2)$
-            \item Worst-case space complexity: $O(1)$
+            \item Average performance:: $\Theta(n^2)$.
+            \item Worst-case space complexity: $O(1)$.
         \end{itemize}
     \end{enumerate}
 
     \subsection{Shell sort}
     \begin{enumerate}
-        \item Idea: Shell sort is a variation of insertion sort. In insertion sort, we can only move element by one position. The idea of Shell sort is optimizing that movement by allowing exchange of far items. In more detailed, we make the array h-sorted For a large h and keep reduce h until it becomes 1. An array is said to be h-sorted If all sublists of every h’th element are sorted.
+        \item Idea: Shell sort is a variation of insertion sort. In insertion sort, we can only move element by one position. The idea of Shell sort is optimizing that movement by allowing exchange of far items. In more detailed, we make the array h-sorted for a large h and keep reduce h until it becomes 1. An array is said to be h-sorted if all subarrays of every h’th element are sorted.
         \item Pseudo code:
         \begin{algorithm}[H]
             \caption{Shell sort}
@@ -181,22 +204,34 @@
                     \State $n:=$ length($A$)
                     \State $\textit{gap}:=n/2$
                     \While{$\textit{gap}\geq 1$}
-                        \For{$i:=1$ to $n-1$}
+                        \For{$i:=\textit{gap}$ \textbf{to} $n-1$}
                             \State $x:=A[i]$
-                            \State $j:=i-gap$
+                            \State $j:=i-\textit{gap}$
                             \While{$j\geq 0$ \textbf{and} $A[j]>x$}
-                            \State $A[j+gap]:=A[j]$
-                            \State $j:=j-gap$
+                            \State $A[j+\textit{gap}]:=A[j]$
+                            \State $j:=j-\textit{gap}$
                             \EndWhile
-                            \State $A[j+gap]:=x$
+                            \State $A[j+\textit{gap}]:=x$
                         \EndFor
-                        \State $\textit{gap}:=\textit{gap}/2$
+                        \State $\textit{gap}:=\lfloor \textit{gap}/2\rfloor$
                     \EndWhile
                 \EndFunction
             \end{algorithmic}
         \end{algorithm}
         \item Aplications:
+        \begin{itemize}
+            \item Shell sort can be implemented using little code and does not use the call stack, some implementations of the qsort function in the C standard library targeted at embedded systems use it instead of quicksort. Shellsort is, for example, used in the uClibc library. For similar reasons, an implementation of Shellsort is present in the Linux kernel.
+            \item Shell sort can also serve as a sub-algorithm of introspective sort, to sort short subarrays and to prevent a slowdown when the recursion depth exceeds a given limit. This principle is employed, for instance, in the bzip2 compressor.
+        \end{itemize}
         \item Optimizations:
+        \begin{itemize}
+            \item Different gap series give different performance:
+            \begin{itemize}
+                \item The simplest one is $\lfloor \frac{n}{2^k}\rfloor$, which makes the worst-case performance $O(n^2)$.
+                \item $4^k+3\cdot 2^{k-1}+1$, prefixed with 1, makes the worst-case performance $O(n^{\frac{4}{3}})$.
+                \item ...
+            \end{itemize}
+        \end{itemize}
         \item Complexity:
         \begin{itemize}
             \item Worst-case performance: $O(n^2)$ when $n$ is the power of 2.
@@ -210,7 +245,7 @@
         \item Idea: we break down an array into several subarrays until each subarray consists of a single element and merging those subarrays in a manner that results in a sorted array.
         \item Pseudo code:
         \begin{algorithm}[H]
-            \caption{Merge sort}
+            \caption{Merge sort (top down)}
             \begin{algorithmic}[1]
                 \Function{merge}{$A$, $\textit{left}$, $\textit{mid}$, $\textit{right}$}
                     \State $k:=0$
@@ -236,7 +271,7 @@
                     \If{$\textit{right}-\textit{left}\leq 1$}
                         \State \textbf{return}
                     \EndIf
-                    \State $\textit{mid}:=(\textit{left}+\textit{right})/2$
+                    \State $\textit{mid}:=\lfloor (\textit{left}+\textit{right})/2\rfloor$
                     \State \Call{mergesort}{$A$, $\textit{left}$, $\textit{mid}$}
                     \State \Call{mergesort}{$A$, $\textit{mid}$, $\textit{right}$}
                     \State \Call{merge}{$A$, $\textit{left}$, $\textit{mid}$, $\textit{right}$}
@@ -244,7 +279,20 @@
             \end{algorithmic}
         \end{algorithm}
         \item Aplications:
+        \begin{itemize}
+            \item Merge sort can be used to sort linked list in $O(n\log n)$ time and $O(1)$ space complexity.
+            \item Merge sort can be used to count number of inversions in an array.
+            \item Merge sort is used in \href{https://en.wikipedia.org/wiki/External_sorting}{external sorting}.
+        \end{itemize}
         \item Optimizations:
+        \begin{itemize}
+            \item We check whether $A[mid]\leq A[mid+1]$ before performing merge can make the best-case performance $\Omega(n)$
+            \item We use insertion sort when the subarray size is under a certain threshhold (e.g 50).
+        \end{itemize}
+        \item Variants:
+        \begin{itemize}
+            \item 3-way merge sort: divide the array into 3 parts instead of 2 parts.
+        \end{itemize}
         \item Complexity:
         \begin{itemize}
             \item Worst-case performance: $O(n\log n)$.
@@ -256,13 +304,13 @@
 
     \subsection{Quick sort}
     \begin{enumerate}
-        \item Idea: in quick sort we recursively choose a pivot and then partition the array into two part: one with elements smaller than the pivot and one with elements greater than the pivot.
+        \item Idea: in quick sort, we recursively choose a pivot and then partition the array into two part: one with elements smaller than the pivot and one with elements greater than the pivot.
         \item Pseudo code:
         \begin{algorithm}[H]
             \caption{Quick sort}
             \begin{algorithmic}[1]
                 \Function{partition}{$A$, $\textit{left}$, $\textit{right}$}
-                    \State $\textit{pivot}:=A[(\textit{left}+\textit{right}-1)/2]$
+                    \State $\textit{pivot}:=A[\lfloor (\textit{left}+\textit{right})/2\rfloor]$
                     \State $i:=\textit{left}-1$
                     \State $j:=\textit{right}$
                     \Loop\ \textbf{forever}
@@ -278,7 +326,12 @@
                     \State \textbf{swap} $A[i]$ \textbf{with} $A[j]$
                     \EndLoop
                 \EndFunction
-                \State
+                \algstore{quicksort}
+            \end{algorithmic}
+        \end{algorithm}
+        \begin{algorithm}[H]
+            \begin{algorithmic}[1]
+                \algrestore{quicksort}
                 \Function{quicksort}{$A$, $\textit{left}$, $\textit{right}$}
                     \If{$\textit{right}-\textit{left}\leq 1$}
                         \State \textbf{return}
@@ -290,6 +343,13 @@
             \end{algorithmic}
         \end{algorithm}
         \item Aplications:
+        \begin{itemize}
+            \item Sorting is used for information searching and as quick sort is the fastest algorithm so it is widely used as a better way of searching.
+            \item It is used everywhere where a stable sort is not needed.
+            \item It is used in operational research and event-driven simulation.
+            \item Numerical computations and in scientific research, for accuracy in calculations most of the efficiently developed algorithm uses priority queue and quick sort is used for sorting.
+            \item Variants of Quicksort are used to separate the k-th smallest or largest elements (\href{https://en.wikipedia.org/wiki/Quickselect}{\emph{Quickselect}}).
+        \end{itemize}
         \item Optimizations:
         \begin{itemize}
             \item There are two way of choosing pivot to minimize the chance of an imbalanced partition:
@@ -297,18 +357,23 @@
                 \item Choose a random pivot.
                 \item Choose a median of leftmost, rightmost, and middle elements as pivot.
             \end{enumerate}
-            \item We can use tail recursion to reduce quick sort worst-case space complexity form $O(n)$ to $O(\log n)$:
+            \item We can use tail recursion to reduce quick sort worst-case space complexity from $O(n)$ to $O(\log n)$:
             \begin{itemize}
                 \item Description: partition the current array into two parts and call recursion on the smaller part, then repeat this on the remaining part.
                 \item Explaination: Because we always call the recursion on the smaller part, the size of the array is always reduce by at least half in each recursion. For that reason, the depth of the call tree is $O(\log n)$ and the space complexity therefore reduce to $O(\log n)$.
             \end{itemize}
+            \item We use insertion sort when the subarray size is under a certain threshhold (e.g 50).
+        \end{itemize}
+        \item Variants:
+        \begin{itemize}
+            \item 3-way quick sort: divide the array into 3 parts instead of 2 parts.
         \end{itemize}
         \item Complexity:
         \begin{itemize}
             \item Worst-case performance: $O(n^2)$ when the chosen pivot is always the largest or smallest element.
             \item Best-case performance: $\Omega(n\log n)$ when each time we perform a partition, we always divide the array into 2 equal parts.
             \item Average performance:: $\Theta(n\log n)$.
-            \item Worst-case space complexity: $O(n)$ (naive), $O(\log n)$ if use tail recursion.
+            \item Worst-case space complexity: $O(n)$ (naive), $O(\log n)$ (if use tail recursion).
         \end{itemize}
     \end{enumerate}
 
@@ -339,10 +404,10 @@
                 \State
                 \Function{heapsort}{$A$}
                     \State $n:=$ length($A$)
-                    \For{$i:=n/2-1$ \textbf{to} $0$}
+                    \For{$i:=\lfloor n/2\rfloor-1$ \textbf{downto} $0$}
                         \State \Call{sift}{$A$, $i$, $n$}
                     \EndFor
-                    \For{$i:=n-1$ \textbf{to} $0$}
+                    \For{$i:=n-1$ \textbf{downto} $0$}
                         \State \textbf{swap} $A[0]$ \textbf{with} $A[i]$
                         \State \Call{sift}{$A$, $0$, $i$} 
                     \EndFor
@@ -350,6 +415,9 @@
             \end{algorithmic}
         \end{algorithm}
         \item Aplications:
+        \begin{itemize}
+            \item Heap sort algorithm is the origin of the heap data structure, which is used widely as priority queue. For example, heap implemented priority queue is used in graph algorithms like Prim's algorithm and Dijkstra's algorithm.
+        \end{itemize}
         \item Optimizations: (none)
         \item Complexity:
         \begin{itemize}
@@ -382,13 +450,20 @@
                     \For{$i:=0$ \textbf{to} $\textit{max}-\textit{min}$}
                         \State $\textit{count}[i]:=0$
                     \EndFor
+                    \algstore{counting}
+            \end{algorithmic}
+        \end{algorithm}
+
+        \begin{algorithm}[H]
+            \begin{algorithmic}[1]
+                    \algrestore{counting}
                     \For{$i:=0$ \textbf{to} $n-1$}
                         \State $\textit{count}[A[i]-\textit{min}]:=\textit{count}[A[i]-\textit{min}]+1$
                     \EndFor
                     \For{$i:=1$ \textbf{to} $\textit{max}-\textit{min}$}
                         \State $\textit{count}[i]:=\textit{count}[i]+\textit{count}[i-1]$
                     \EndFor
-                    \For{$i:=n-1$ \textbf{to} $0$}
+                    \For{$i:=n-1$ \textbf{downto} $0$}
                         \State $B[\textit{count}[A[i]-\textit{min}]-1]:=A[i]$
                         \State $\textit{count}[A[i]-\textit{min}]:=\textit{count}[A[i]-\textit{min}]-1$
                     \EndFor
@@ -399,7 +474,13 @@
             \end{algorithmic}
         \end{algorithm}
         \item Aplications:
-        \item Optimizations: (none)
+        \begin{itemize}
+            \item Counting sort is effective when the data type of the array is integer and the value range is linear with n.
+        \end{itemize}
+        \item Optimizations:
+        \begin{itemize}
+            \item In the second loop, instead of calculating the correct position of the value, we loop from the smallest value to the largest value and append them to the end of the array.
+        \end{itemize}
         \item Complexity: k is the range of the non-negative key values.
         \begin{itemize}
             \item Worst-case performance: $O(n+k)$.
@@ -409,12 +490,12 @@
         \end{itemize}
     \end{enumerate}
     
-    \subsection{Radix sort (least significant digit)}
+    \subsection{Radix sort}
     \begin{enumerate}
-        \item Idea: we do digit by digit sort starting from least significant digit to most significant digit. Radix sort uses counting sort as a subroutine to sort.
+        \item Idea: we do digit by digit sorting and use counting sort as a subroutine to sort.
         \item Pseudo code:
         \begin{algorithm}[H]
-            \caption{Radix sort}
+            \caption{Radix sort (least significant digit)}
             \begin{algorithmic}[1]
                 \Function{countsort}{$A$, $\textit{exp}$}
                     \State $n:=$ length($A$)
@@ -423,15 +504,15 @@
                     \EndFor
                     \For{$i:=0$ \textbf{to} $n-1$}
                         \State $\textit{curDigit}:=(A[i]\ \textbf{div}\ exp)\ \textbf{mod}\ 10$
-                        \State $\textit{count}[curDigit]:=\textit{count}[curDigit]+1$
+                        \State $\textit{count}[\textit{curDigit}]:=\textit{count}[\textit{curDigit}]+1$
                     \EndFor
                     \For{$i:=1$ \textbf{to} $9$}
                         \State $\textit{count}[i]:=\textit{count}[i]+\textit{count}[i-1]$
                     \EndFor
-                    \For{$i:=0$ \textbf{to} $n-1$}
+                    \For{$i:=n-1$ \textbf{downto} $0$}
                         \State $\textit{curDigit}:=(A[i]\ \textbf{div}\ exp)\ \textbf{mod}\ 10$
-                        \State $B[\textit{count}[curDigit]-1]:=A[i]$
-                        \State $\textit{count}[curDigit]:=\textit{count}[curDigit]-1$
+                        \State $B[\textit{count}[\textit{curDigit}]-1]:=A[i]$
+                        \State $\textit{count}[\textit{curDigit}]:=\textit{count}[\textit{curDigit}]-1$
                     \EndFor
                     \For{$i:=0$ \textbf{to} $n-1$}
                         \State $A[i]:=B[i]$
@@ -457,12 +538,20 @@
             \end{algorithmic}
         \end{algorithm}
         \item Aplications:
-        \item Optimizations: (none)
+        \begin{itemize}
+            \item Radix sort can be applied to data that can be sorted lexicographically, such as words and integers. It is also used for stably sorting strings. 
+            \item It is a good option when the algorithm runs on parallel machines, making the sorting faster. To use parallelization, we divide the input into several buckets, enabling us to sort the buckets in parallel, as they are independent of each other. 
+            \item Radix sort is also used as a part of other algorithms. For example, it is used in \href{https://cp-algorithms.com/string/suffix-array.html}{\emph{suffix array}} construction.
+        \end{itemize}
+        \item Optimizations: 
+        \begin{itemize}
+            \item If we choose the suitable base, we can have an very effective sorting algorithm. For example, instead of using base 10, we could group 5 digit together and use radix sort on base $10^5$, which makes the algorithm run 5 times faster.
+        \end{itemize}
         \item Complexity: b is the base and d is the number of digits in the maximum element in the array.
         \begin{itemize}
-            \item Worst-case performance: $O(d.(n+b))$.
-            \item Best-case performance: $\Omega(d.(n+b))$.
-            \item Average performance:: $\Theta(d.(n+b))$.
+            \item Worst-case performance: $O(d\cdot (n+b))$.
+            \item Best-case performance: $\Omega(d\cdot (n+b))$.
+            \item Average performance:: $\Theta(d\cdot (n+b))$.
             \item Worst-case space complexity: $O(n+b)$.
         \end{itemize}
     \end{enumerate}
@@ -475,7 +564,9 @@
             \caption{Flash sort}
             \begin{algorithmic}[1]
                 \Function{flashsort}{$A$}
-                    \State $n:=$ length($A$), $\textit{min}:=+\infty$, $\textit{max}:=-\infty$
+                    \State $n:=$ length($A$)
+                    \State $\textit{min}:=+\infty$
+                    \State $\textit{max}:=-\infty$
                     \For{$i:=0$ \textbf{to} $n-1$}
                         \If{$\textit{min}>A[i]$}
                             \State $\textit{min}:=A[i]$
@@ -484,16 +575,13 @@
                             \State $\textit{max}:=A[i]$
                         \EndIf
                     \EndFor 
-                    \State $m:=0.43*n$
+                    \State $m:=\lfloor 0.43*n\rfloor$
                     \For{$i:=1$ \textbf{to} $m$}
-                    \State $L[i]:=0$
+                        \State $L[i]:=0$
                     \EndFor
                     \For{$i:=0$ \textbf{to} $n-1$}
-                    \State $k:=(m-1)*(A[i]-\textit{min})\ \textbf{div}\ (\textit{max}-\textit{min})+1$
-                    \State $L[k]:=L[k]+1$
-                    \EndFor
-                    \For{$i:=2$ \textbf{to} $m$}
-                    \State $L[i]:=L[i]+L[i-1]$
+                        \State $k:=(m-1)*(A[i]-\textit{min})\ \textbf{div}\ (\textit{max}-\textit{min})+1$
+                        \State $L[k]:=L[k]+1$
                     \EndFor
                     \algstore{myalg}
             \end{algorithmic}
@@ -502,7 +590,13 @@
         \begin{algorithm}[H]
             \begin{algorithmic}[1]
                     \algrestore{myalg}
-                    \State $\textit{count}:=0$, $i:=0$, $k:=m$
+                    \For{$i:=2$ \textbf{to} $m$}
+                        \State $L[i]:=L[i]+L[i-1]$
+                    \EndFor
+                    \State $\textit{count}:=0$
+                    \State $i:=0$
+                    \State $k:=m$
+                    
                     \While{$\textit{count}<n$}
                         \While{$i\geq L[k]$}
                             \State $i:=i+1$
@@ -516,11 +610,12 @@
                             \State $\textit{count}:=\textit{count}+1$
                         \EndWhile
                     \EndWhile
-                    \For{$k:=1$ \textbf{to} $m$}
-                        \For{$i:=L[k]+1$ \textbf{to} $L[k]-1$}
+
+                    \For{$k:=1$ \textbf{to} $m-1$}
+                        \For{$i:=L[k]+1$ \textbf{to} $L[k+1]-1$}
                             \State $x:=A[i]$
                             \State $j:=i-1$
-                            \While{$j\geq 0$ \textbf{and} $A[j]>x$}
+                            \While{$j\geq L[k]$ \textbf{and} $A[j]>x$}
                                 \State $A[j+1]:=A[j]$
                                 \State $j:=j-1$
                             \EndWhile
@@ -531,13 +626,220 @@
             \end{algorithmic}
         \end{algorithm}
         \item Aplications:
+        \begin{itemize}
+            \item Flash sort can be used to sort integer or real number array effectively.
+        \end{itemize}
         \item Optimizations: (none)
         \item Complexity: m is the number of buckets.
         \begin{itemize}
             \item Worst-case performance: $O(m+n^2)$ when all elements are distributed to the same bucket.
             \item Best-case performance: $\Omega(n+m)$ when all elements are distributed equally and after the distribution, every bucket is sorted.
-            \item Average performance:: $\Theta(n\log n)$.
+            \item Average performance:: $\Theta(n)$.
             \item Worst-case space complexity: $O(m)$.
         \end{itemize}
     \end{enumerate}
+\newpage
+
+\newpage
+\section{Charts}
+\graphicspath{ {../chart\ picture} }
+
+\subsection{Randomized}
+\begin{center}
+    \includegraphics[width=16cm,height=12cm]{Randomized (runtime).png}
+\end{center}
+\textbf{Comment:}
+\begin{itemize}
+    \item Fastest algorithm: counting sort.
+    \item Slowest algorithm: bubble sort.
+    \item Insertion sort is the fastest among all $O(n^2)$ algorithms.
+\end{itemize}
+
+\begin{center}
+    \newpage
+    \includegraphics[width=16cm,height=12cm]{Randomized (comp).png}
+\end{center}
+\textbf{Comment:}
+\begin{itemize}
+    \item Algorithm using the least comparisons: counting sort and radix sort.
+    \item Algorithm using the most comparisons: bubble sort and selection sort.
+    \item Insertion sort is using the least comparisons among all $O(n^2)$ algorithms.
+\end{itemize}
+
+\newpage
+\subsection{Nearly sorted}
+\begin{center}
+    \includegraphics[width=16cm,height=12cm]{Nearly sorted (runtime).png}
+\end{center}
+\textbf{Comment:}
+\begin{itemize}
+    \item Fastest algorithm: counting sort.
+    \item Slowest algorithm: bubble sort.
+\end{itemize}
+
+\begin{center}
+    \newpage
+    \includegraphics[width=16cm,height=12cm]{Nearly sorted (comp).png}
+\end{center}
+\textbf{Comment:}
+\begin{itemize}
+    \item Algorithm using the least comparisons: counting sort and radix sort.
+    \item Algorithm using the most comparisons: bubble sort and selection sort.
+\end{itemize}
+
+\newpage
+\subsection{Sorted}
+\begin{center}
+    \includegraphics[width=16cm,height=12cm]{Sorted (runtime).png}
+\end{center}
+\textbf{Comment:}
+\begin{itemize}
+    \item Fastest algorithm: counting sort.
+    \item Slowest algorithm: bubble sort.
+\end{itemize}
+
+\begin{center}
+    \newpage
+    \includegraphics[width=16cm,height=12cm]{Sorted (comp).png}
+\end{center}
+\textbf{Comment:}
+\begin{itemize}
+    \item Algorithm using the least comparisons: counting sort and radix sort.
+    \item Algorithm using the most comparisons: bubble sort and selection sort.
+\end{itemize}
+
+\newpage
+\subsection{Reversed}
+\begin{center}
+    \includegraphics[width=16cm,height=12cm]{Reversed (runtime).png}
+\end{center}
+\textbf{Comment:}
+\begin{itemize}
+    \item Fastest algorithm: counting sort.
+    \item Slowest algorithm: bubble sort and shaker sort.
+    \item Selection sort is the fastest among all $O(n^2)$ algorithms.
+    \item In reversed input, most of algorithms run faster than in randomized input because of \href{https://stackoverflow.com/questions/11227809/why-is-processing-a-sorted-array-faster-than-processing-an-unsorted-array}{\emph{brach prediction.}}
+\end{itemize}
+
+\begin{center}
+    \newpage
+    \includegraphics[width=16cm,height=12cm]{Reversed (comp).png}
+\end{center}
+\textbf{Comment:}
+\begin{itemize}
+    \item Algorithm using the least comparisons: counting sort and radix sort.
+    \item Algorithm using the most comparisons: bubble sort, shaker sort, selection sort and insertion sort.
+\end{itemize}
+
+\newpage
+\section{Sorting algorithms classification and overall comments}
+\subsection{Sorting algorithms classification}
+\begin{enumerate}
+    \item By number of comparisons in average case:
+    \begin{itemize}
+        \item $O(n^2)$: bubble sort, shaker sort, selection sort and insertion sort.
+        \item $O(n\log n)$: quick sort, merge sort, heap sort and shell sort.
+        \item $O(n)$: flash sort.
+        \item No comparison: counting sort and radix sort.
+    \end{itemize}
+    \item By average performance (value range is linear with array's length):
+    \begin{itemize}
+        \item $O(n^2)$: bubble sort, shaker sort, selection sort and insertion sort.
+        \item $O(n\log n)$: quick sort, merge sort, heap sort and shell sort.
+        \item $O(n)$: flash sort, counting sort and radix sort.
+    \end{itemize}
+    \item By memory usage (value range is linear with array's length):
+    \begin{itemize}
+        \item $O(1)$: bubble sort, shaker sort, selection sort, insertion sort, heap sort, shell sort.
+        \item $O(\log n)$: quick sort (optimized version).
+        \item $O(n)$: merge sort, quick sort, flash sort (number of buckets is $0.43\cdot \textit{array's length}$), radix sort and counting sort.
+    \end{itemize}
+    \item By recursion:
+    \begin{itemize}
+        \item Non-recursive: bubble sort, shaker sort, selection sort, insertion sort, shell sort, heap sort, counting sort, radix sort and flash sort.
+        \item Recursive: quick sort and merge sort.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Overall comments}
+\begin{enumerate}
+    \item Bubble sort: a very slow and ineffective algorithm that uses a lot of comparisons and swaps in general. However, its implementation is very simple and it requires no extra memory usage.
+    \item Shaker sort: an optimized variants of bubble sort but it is still very slow and ineffective.
+    \item Selection sort: an ineffective algorithm that uses a lot of comparisons in general. However, its implementation is very simple and it requires no extra memory usage.
+    \item Insertion sort: an effective algorithm for a small array and it can be used to optimized others algorithms such as merge sort.
+    \item Shell sort: an easy-to-implement sort algorithm that has a relatively good performance $O(n\log n)$ in average case. Moreover, its perfomance can be improved by using a more effective gap sequence.
+    \item Merge sort: a sorting algorithm that has consitent speed $O(n\log n)$ on any data size. In addition, it can sort an linked list very effectively.
+    \item Heap sort: an efficient sorting algorithm that has consitent speed $O(n\log n)$ and use $O(1)$ extra memory. Furthermore, heap data structure which is derived from the algorithm is also widely used.
+    \item Quick sort: an sorting algorithm that works very well in practice.
+    \item Counting sort: a very effective sorting algorithm for an array with small value range.
+    \item Radix sort: a very effective sorting algorithm that sort digit by digit or key by key.
+    \item Flash sort: a very fast algorithm. In addition, it is a very beautiful combination of insertion sort, counting sort, bucket sort and quick sort.
+\end{enumerate}
+
+\section{Project organization and programming notes}
+\subsection{Project organization}
+In the SOURCE folder, I divide my source code into several header file and folder as follow:
+\begin{itemize}
+    \item Every sorting algorithm is put in its own files (e.g bubble sort is in \textbf{BubbleSort.h} and \textbf{BubbleSort.cpp}). For every sorting algorithm, there are 2 versions: normal version and version that counts number of comparisons.
+    \item All 11 sorting algorithms are put in the sorts folder and their header files are included in the \textbf{Sorts.h} for convenient use.
+    \item Data generater functions are put in \textbf{InputGenerator.h} and \textbf{InputGenerator.cpp}.
+    \item All 5 command declarations and implementations are put in \textbf{OutputCommand.h} and \textbf{OutputCommand.cpp}.
+\end{itemize}
+\subsection{Programming notes}
+Here are the special library and data structure that I use:
+\begin{enumerate}
+    \item \textbf{map} library for std::map, which I use for mapping the algorithm name to its function pointer. 
+    \\ For example, "bubble-sort" is mapped to a pointer to \textbf{bubbleSort(int*,int)} and a pointer to \textbf{bubbleSortCountComp(int*,int)}.
+    \item \textbf{chrono} library for measuring the running time of sorting algorithms.
+    \item \textbf{sstream} library for concatenating string.
+    \item \textbf{regex} library for regular expression matching which I use to check the validity of the commands.
+\end{enumerate}
+\subsection{System specification}
+\begin{itemize}
+    \item Chip: Apple M1 Pro
+    \item Total Number of Cores: 8 (6 performance and 2 efficiency)
+    \item Memory: 16 GB
+\end{itemize}
+
+
+\begin{thebibliography}{99}
+    \bibitem{lecturer} Mr. Nguyen Thanh Phuong's lectures on \emph{algorithm complexity analysis}, \emph{Bubble sort}, \emph{Shaker sort}, \emph{Selection sort}, \emph{Insertion sort}, \emph{Heap sort}, \emph{Quick sort}, \emph{Counting sort}, \emph{Radix sort} and \emph{Flash sort}.
+
+    \bibitem{bubblesortidea} Karuna Sehgal, \href{https://medium.com/karuna-sehgal/an-introduction-to-bubble-sort-d85273acfcd8#:~:text=Bubble%20Sort%20is%20a%20sorting,exist%20in%20the%20wrong%20order.}{\emph{An introduction to bubble sort}}, for bubble sort idea.
+
+    \bibitem{selectionsortidea} Anand Jaisingh, \href{https://www.hackerearth.com/practice/algorithms/sorting/selection-sort/tutorial/#:~:text=The%20Selection%20sort%20algorithm%20is,position%20in%20a%20sorted%20array.}{\emph{Selection sort}}, for selection sort idea.
+    
+    \bibitem{insertionsort} Anand Jaisingh, \href{https://www.hackerearth.com/practice/algorithms/sorting/insertion-sort/tutorial/#:~:text=Insertion%20sort%20is%20based%20on,belongs%20in%20a%20sorted%20array.}{\emph{Insertion sort}}, for insertion sort idea.
+
+    \bibitem{shellsortgfg} GeeksforGeeks, \href{https://www.geeksforgeeks.org/shellsort/}{\emph{ShellSort}}, for shell sort idea, algorithm and implementation.
+
+    \bibitem{shellsortwiki} Wikipedia, \href{https://en.wikipedia.org/wiki/Shellsort}{\emph{Shellsort}}, for shell sort complexity analysis and gap sequences analysis.
+
+    \bibitem{shellsortapp} Alexa Ryder, \href{https://iq.opengenus.org/shell-sort/#applications}{\emph{Shell Sort}}, for shell sort aplications.
+
+    \bibitem{mergesortidea} Anand Jaisingh, \href{https://www.hackerearth.com/practice/algorithms/sorting/merge-sort/tutorial/#:~:text=Merge%20sort%20is%20a%20divide,results%20into%20a%20sorted%20list.}{\emph{Merge Sort}}, for merge sort idea.
+
+    \bibitem{mergesortgfg} GeeksforGeeks, \href{https://www.geeksforgeeks.org/merge-sort/}{\emph{Merge Sort Algorithm}}, for merge sort optimizations and aplications.
+
+    \bibitem{mergesortoptimization} GeeksforGeeks, \href{https://www.geeksforgeeks.org/make-mergesort-perform-comparisons-best-case/}{\emph{How to make Mergesort to perform $O(n)$ comparisons in best case?}}, for merge sort optimizations.
+
+    \bibitem{quicksortoptimization} GeeksforGeeks, \href{https://www.geeksforgeeks.org/quicksort-tail-call-optimization-reducing-worst-case-space-log-n/}{\emph{QuickSort Tail Call Optimization Reducing worst case space to $O(\log n)$}}, for quick sort space complexity analysis and optimization.
+
+    \bibitem{quicksortapp} sidhijain, \href{https://www.geeksforgeeks.org/application-and-uses-of-quicksort/#:~:text=It%20is%20used%20in%20operational,sort%20is%20used%20for%20sorting.}{\emph{Application and uses of Quicksort}}, for quick sort pivot choices and aplications.
+
+    \bibitem{heapsortapp} GeeksforGeeks, \href{https://www.geeksforgeeks.org/applications-of-heap-data-structure/}{\emph{Applications of Heap Data Structure}}, for heap data (heapsort) applications.
+
+    \bibitem{heapsortgfg} GeeksforGeeks, \href{https://www.geeksforgeeks.org/heap-sort/}{\emph{Heap Sort}}, for heap sort idea.
+
+    \bibitem{countingsortwiki} Wikipedia, \href{https://en.wikipedia.org/wiki/Counting_sort}{\emph{Counting sort}}, for counting sort variants.
+
+    \bibitem{countingsortgfg} GeeksforGeeks, \href{https://www.geeksforgeeks.org/counting-sort/}{\emph{Counting Sort}}, for counting sort idea.
+
+    \bibitem{radixsort} GeeksforGeeks, \href{https://www.geeksforgeeks.org/radix-sort/}{\emph{Radix Sort}}, for radix sort idea.
+
+    \bibitem{radixsortapp} Tanya Shrivastava, \href{https://www.interviewkickstart.com/learn/radix-sort-algorithm}{\emph{Learn the Radix Sort Algorithm}}, for radix sort applications.
+
+    \bibitem{flashsort} Wikipedia, \href{https://en.wikipedia.org/wiki/Flashsort}{\emph{Flashsort}}, for flash sort idea and complexity.
+
+\end{thebibliography}
 \end{document}
