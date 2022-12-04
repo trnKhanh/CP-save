@@ -138,6 +138,36 @@ void preOrder(node*root)
     preOrder(root->left);
     preOrder(root->right);
 }
+int calHeight(node *root)
+{
+    if (!root) return 0;
+    return max(calHeight(root->left), calHeight(root->right)) + 1;
+}
+int count(node *root)
+{
+    if (!root) return 0;
+    return count(root->left) + count(root->right) + 1;
+}
+int countLess(node *root, int key)
+{
+    if (!root) return 0;
+    int res = countLess(root->left, key);
+    if (key > root->key) res += countLess(root->right, key) + 1;
+    return res;
+}
+int countGreater(node *root, int key)
+{
+    if (!root) return 0;
+    int res = countGreater(root->right, key);
+    if (key < root->key) res += countGreater(root->left, key) + 1;
+    return res;
+}
+int countLeaf(node *root)
+{
+    if (!root) return 0;
+    if (!root->left && !root->right) return 1;
+    return countLeaf(root->left) + countLeaf(root->right);
+}
 int main()
 {
     node *root = nullptr;
@@ -148,11 +178,27 @@ int main()
         insert(root, x);
         preOrder(root);
         cout << "\n";
+        if (calHeight(root) != root->height)
+        {
+            cout << "WRONG\n";
+        }
+        cout << count(root) << "\n";
+        cout << "Node less than 20: " << countLess(root, 20) << "\n"; 
+        cout << "Node greater than 20: " << countGreater(root, 20) << "\n"; 
+        cout << "Leaf: " << countLeaf(root) << "\n";
     }
     while(cin >> x)
     {
         remove(root, x);
         preOrder(root);
         cout << "\n";
+        if (calHeight(root) != root->height)
+        {
+            cout << "WRONG\n";
+        }
+        cout << count(root) << "\n";
+        cout << "Node less than 20: " << countLess(root, 20) << "\n"; 
+        cout << "Node greater than 20: " << countGreater(root, 20) << "\n"; 
+        cout << "Leaf: " << countLeaf(root) << "\n";
     }
 }
