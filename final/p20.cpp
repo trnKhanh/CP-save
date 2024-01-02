@@ -1,13 +1,13 @@
 #include <iostream>
-#include <vector>
 #include <sstream>
+#include <vector>
 
 using namespace std;
 
 void solve();
-
 int main() {
-  ios_base::sync_with_stdio(0); cin.tie(0);
+  ios_base::sync_with_stdio(0);
+  cin.tie(0);
 
   solve();
 }
@@ -29,17 +29,17 @@ void solve() {
   }
 
   n = a.size();
-  vector<int> p(n+1);
+  vector<int> p(n + 1);
   p[0] = 1;
-  for (int i = 1; i <= n; ++i) 
-    p[i] = p[i-1] * i;
-  
+  for (int i = 1; i <= n; ++i)
+    p[i] = p[i - 1] * i;
+
   int k = 0;
   vector<int> inAns(n + 1, 0);
   for (int i = 0; i < n; ++i) {
     for (int d = 1; d < a[i]; ++d) {
       if (!inAns[d]) {
-        k += p[n-i-1];
+        k += p[n - i - 1];
       }
     }
     inAns[a[i]] = 1;
@@ -49,13 +49,13 @@ void solve() {
 
   inAns.assign(n + 1, 0);
   --y;
-  
+
   for (int i = 0; i < n; ++i) {
     int d = 1;
     for (; d < n; ++d) {
       if (!inAns[d]) {
-        if (y - p[n-i-1] >= 0) {
-          y -= p[n-i-1];
+        if (y - p[n - i - 1] >= 0) {
+          y -= p[n - i - 1];
         } else {
           break;
         }
